@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "moduleResolution": "node",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "baseUrl": "./src",
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "typedocOptions": {
+    "name": "test_npm",
+    "mode": "file",
+    "out": "./docs"
+  }
+}
