@@ -14,7 +14,7 @@
   "author": "han",
   "license": "ISC",
   "devDependencies": {
-    "@types/pixi.js": "^5.0.0",
+    "@types/pixi.js": "^4.8.4",
     "ts-loader": "^7.0.2",
     "tslint": "^6.1.2",
     "tslint-config-airbnb": "^5.11.2",
@@ -25,6 +25,6 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "pixi.js": "^4.8.9"
+    "pixi.js": "^4.8.3"
   }
 }
