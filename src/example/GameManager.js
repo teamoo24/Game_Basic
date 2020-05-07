@@ -22,13 +22,20 @@ export default class GameManager {
     static start(params) {
         // PIXI Application生成
         const game = new PIXI.Application(params.glWidth, params.glHeight, params.option);
-        //GameManagerインスタンス生成
+        // GameManager インスタンス生成
+        const instance = new GameManager(game);
         GameManager.instance = new GameManager(game);
         // canvasをDOMに追加
         //document.body.appendChild(game.view);
         params.view.appendChild(game.view);
         game.ticker.add((delta) => {
             //メインループ
+        });
+        // メインループ
+        game.ticker.add((delta) => {
+            if (instance.currentScene) {
+                instance.currentScene.update(delta);
+            }
         });
     }
     /**
