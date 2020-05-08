@@ -9,8 +9,74 @@ import Immediate from 'example/transition/Immediate';
 export default class Scene extends PIXI.Container {
     constructor() {
         super(...arguments);
+        /**
+        *	シーン開始用のトランジションオブジェクト
+        */
         this.transitionIn = new Immediate();
+        /**
+        *	シーン終了用のトランジションオブジェクト
+        */
         this.transitionOut = new Immediate();
+        /**
+        *	更新すべきオブジェクトを保持する
+        */
+        this.objectsToUpdate = [];
+    }
+    /**
+    * リソースリストを作成し返却する
+    */
+    createInitialResourceList() {
+        return [];
+    }
+    /**
+    * リソースダウンロードのフローを実行する
+    */
+    beginLoadResource(onLoaded) {
+        return new Promise((resolve) => {
+            this.loadInitialResource(() => resolve());
+        }).then(() => {
+            onLoaded();
+        }).then(() => {
+            this.onResourceLoaded();
+        });
+    }
+    /**
+    * 最初に指定されたリソースをダウンロードする
+    */
+    loadInitialResource(onLoaded) {
+        const assets = this.createInitialResourceList();
+        const filteredAssets = this.filterLoadedAssets(assets);
+        if (filteredAssets.length > 0) {
+            PIXI.loader.add(filteredAssets).load(() => onLoaded());
+        }
+        else {
+            onLoaded();
+        }
+    }
+    /**
+    *　beginLoadResource完了時のコールバックメソッド
+    */
+    onResourceLoaded() {
+    }
+    /**
+    * 渡されたアセットのリストからロード済みのものをフィルタリングする
+    */
+    filterLoadedAssets(assets) {
+        const assetMap = new Map();
+        for (let i = 0; i < assets.length; i++) {
+            const asset = assets[i];
+            if (typeof asset == 'string') {
+                if (!PIXI.loader.resources[asset] && !assetMap.has(asset)) {
+                    assetMap.set(asset, { name: asset, url: asset });
+                }
+            }
+            else {
+                if (!PIXI.loader.resources[asset.name] && !assetMap.has(asset.name)) {
+                    assetMap.set(asset.name, asset);
+                }
+            }
+        }
+        return Array.from(assetMap.values());
     }
     /**
     * GameManager によって requestAnimationFrame 毎に呼び出されるメソッド
@@ -27,11 +93,22 @@ export default class Scene extends PIXI.Container {
     * 更新処理を行うべきオブジェクトとして渡されたオブジェクトを登録する
     */
     registerUpdatingObject(object) {
+        this.objectsToUpdate.push(object);
     }
     /**
     * 更新処理を行うべきオブジェクトを更新する
     */
     updateRegisteredObjects(delta) {
+        const nextObjectsToUpdate = [];
+        for (let i = 0; i < this.objectsToUpdate.length; i++) {
+            const obj = this.objectsToUpdate[i];
+            if (!obj || obj.isDestroyed()) {
+                continue;
+            }
+            obj.update(delta);
+            nextObjectsToUpdate.push(obj);
+        }
+        this.objectsToUpdate = nextObjectsToUpdate;
     }
     /**
     * シーン追加トランジション開始
