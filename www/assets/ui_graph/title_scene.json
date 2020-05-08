@@ -1,0 +1,104 @@
+{
+  "nodes": [
+    {
+      "id": "bg_3_1",
+      "type": "sprite",
+      "position": [0, 0],
+      "params": {
+        "textureName": "battle/bg_3_1.png",
+        "url": "battle/bg_3_1.png"
+      }
+    },
+    {
+      "id": "bg_3_2",
+      "type": "sprite",
+      "position": [600, 0],
+      "params": {
+        "textureName": "battle/bg_3_2.png",
+        "url": "battle/bg_3_2.png"
+      }
+    },
+    {
+      "id": "bg_3_3",
+      "type": "sprite",
+      "position": [1200, 0],
+      "params": {
+        "textureName": "battle/bg_3_3.png",
+        "url": "battle/bg_3_3.png"
+      }
+    },
+    {
+      "id": "bg_2_1",
+      "type": "sprite",
+      "position": [0, 0],
+      "params": {
+        "textureName": "battle/bg_2_1.png",
+        "url": "battle/bg_2_1.png"
+      }
+    },
+    {
+      "id": "bg_2_2",
+      "type": "sprite",
+      "position": [600, 0],
+      "params": {
+        "textureName": "battle/bg_2_2.png",
+        "url": "battle/bg_2_2.png"
+      }
+    },
+    {
+      "id": "bg_2_3",
+      "type": "sprite",
+      "position": [1200, 0],
+      "params": {
+        "textureName": "battle/bg_2_3.png",
+        "url": "battle/bg_2_3.png"
+      }
+    },
+    {
+      "id": "bg_1_5",
+      "type": "sprite",
+      "position": [0, 0],
+      "params": {
+        "textureName": "battle/bg_1_5.png",
+        "url": "battle/bg_1_5.png"
+      }
+    },
+    {
+      "id": "bg_1_6",
+      "type": "sprite",
+      "position": [600, 0],
+      "params": {
+        "textureName": "battle/bg_1_6.png",
+        "url": "battle/bg_1_6.png"
+      }
+    },
+    {
+      "id": "bg_1_7",
+      "type": "sprite",
+      "position": [1200, 0],
+      "params": {
+        "textureName": "battle/bg_1_7.png",
+        "url": "battle/bg_1_7.png"
+      }
+    },
+    {
+      "id": "touch_to_start",
+      "type": "text",
+      "position": [568, 320],
+      "params": {
+        "family": "MisakiGothic",
+        "text": "TOUCH TO START",
+        "size": 48,
+        "color": "0xffffff",
+        "anchor": [0.5, 0.5],
+        "padding": 16
+      }
+    }
+  ],
+  "metadata": {
+    "screen": {
+      "width": 640,
+      "height": 1136
+    }
+  }
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "unitId":      1,
+    "cost":        8,
+    "maxHealth":   20,
+    "power":       6,
+    "speed":       2,
+    "hitFrame":    4,
+    "knockBackFrames": 30,
+    "knockBackSpeed": 4
+  },
+  {
+    "unitId":      2,
+    "cost":        15,
+    "maxHealth":   60,
+    "power":       2,
+    "speed":       1,
+    "hitFrame":    2,
+    "knockBackFrames": 30,
+    "knockBackSpeed": 4
+  },
+  {
+    "unitId":      3,
+    "cost":        24,
+    "maxHealth":   20,
+    "power":       4,
+    "speed":       3,
+    "hitFrame":    3,
+    "knockBackFrames": 30,
+    "knockBackSpeed": 4
+  },
+  {
+    "unitId":      4,
+    "cost":        32,
+    "maxHealth":   40,
+    "power":       16,
+    "speed":       2,
+    "hitFrame":    4,
+    "knockBackFrames": 30,
+    "knockBackSpeed": 4
+  },
+  {
+    "unitId":      5,
+    "cost":        40,
+    "maxHealth":   100,
+    "power":       22,
+    "speed":       1.5,
+    "hitFrame":    5,
+    "knockBackFrames": 30,
+    "knockBackSpeed": 4
+  }
+]

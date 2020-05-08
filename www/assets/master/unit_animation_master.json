@@ -1,0 +1,218 @@
+[
+  {
+    "unitId": 1,
+    "hitFrame": 4,
+    "types": {
+      "wait": {
+        "updateDuration": 12,
+        "frames": [
+          "unit_1_wait_1.png",
+          "unit_1_wait_2.png"
+        ]
+      },
+      "walk": {
+        "updateDuration": 8,
+        "frames": [
+          "unit_1_walk_1.png",
+          "unit_1_walk_2.png",
+          "unit_1_walk_3.png",
+          "unit_1_walk_4.png",
+          "unit_1_walk_5.png",
+          "unit_1_walk_6.png"
+        ]
+      },
+      "attack": {
+        "updateDuration": 4,
+        "frames": [
+          "unit_1_attack_1.png",
+          "unit_1_attack_2.png",
+          "unit_1_attack_3.png",
+          "unit_1_attack_4.png",
+          "unit_1_attack_5.png",
+          "unit_1_attack_6.png",
+          "unit_1_attack_7.png",
+          "unit_1_attack_8.png"
+        ]
+      },
+      "damage": {
+        "updateDuration": 4,
+        "frames": [
+          "unit_1_damage_1.png"
+        ]
+      }
+    }
+  },
+  {
+    "unitId": 2,
+    "hitFrame": 2,
+    "types": {
+      "wait": {
+        "updateDuration": 12,
+        "frames": [
+          "unit_2_wait_1.png",
+          "unit_2_wait_2.png"
+        ]
+      },
+      "walk": {
+        "updateDuration": 8,
+        "frames": [
+          "unit_2_walk_1.png",
+          "unit_2_walk_2.png",
+          "unit_2_walk_3.png",
+          "unit_2_walk_4.png",
+          "unit_2_walk_5.png",
+          "unit_2_walk_6.png"
+        ]
+      },
+      "attack": {
+        "updateDuration": 4,
+        "frames": [
+          "unit_2_attack_1.png",
+          "unit_2_attack_2.png",
+          "unit_2_attack_3.png",
+          "unit_2_attack_4.png",
+          "unit_2_attack_5.png",
+          "unit_2_attack_6.png"
+        ]
+      },
+      "damage": {
+        "updateDuration": 1,
+        "frames": [
+          "unit_2_damage_1.png"
+        ]
+      }
+    }
+  },
+  {
+    "unitId": 3,
+    "hitFrame": 3,
+    "types": {
+      "wait": {
+        "updateDuration": 12,
+        "frames": [
+          "unit_3_wait_1.png",
+          "unit_3_wait_2.png"
+        ]
+      },
+      "walk": {
+        "updateDuration": 4,
+        "frames": [
+          "unit_3_walk_1.png",
+          "unit_3_walk_2.png",
+          "unit_3_walk_3.png",
+          "unit_3_walk_4.png",
+          "unit_3_walk_5.png",
+          "unit_3_walk_6.png"
+        ]
+      },
+      "attack": {
+        "updateDuration": 3,
+        "frames": [
+          "unit_3_attack_1.png",
+          "unit_3_attack_2.png",
+          "unit_3_attack_3.png",
+          "unit_3_attack_4.png",
+          "unit_3_attack_5.png",
+          "unit_3_attack_6.png",
+          "unit_3_attack_7.png"
+        ]
+      },
+      "damage": {
+        "updateDuration": 1,
+        "frames": [
+          "unit_3_damage_1.png"
+        ]
+      }
+    }
+  },
+  {
+    "unitId": 4,
+    "hitFrame": 4,
+    "types": {
+      "wait": {
+        "updateDuration": 12,
+        "frames": [
+          "unit_4_wait_1.png",
+          "unit_4_wait_2.png"
+        ]
+      },
+      "walk": {
+        "updateDuration": 10,
+        "frames": [
+          "unit_4_walk_1.png",
+          "unit_4_walk_2.png",
+          "unit_4_walk_3.png",
+          "unit_4_walk_4.png",
+          "unit_4_walk_5.png",
+          "unit_4_walk_6.png"
+        ]
+      },
+      "attack": {
+        "updateDuration": 6,
+        "frames": [
+          "unit_4_attack_1.png",
+          "unit_4_attack_2.png",
+          "unit_4_attack_3.png",
+          "unit_4_attack_4.png",
+          "unit_4_attack_5.png",
+          "unit_4_attack_6.png",
+          "unit_4_attack_7.png",
+          "unit_4_attack_8.png",
+          "unit_4_attack_9.png",
+          "unit_4_attack_10.png",
+          "unit_4_attack_11.png"
+        ]
+      },
+      "damage": {
+        "updateDuration": 1,
+        "frames": [
+          "unit_4_damage_1.png"
+        ]
+      }
+    }
+  },
+  {
+    "unitId": 5,
+    "hitFrame": 5,
+    "types": {
+      "wait": {
+        "updateDuration": 12,
+        "frames": [
+          "unit_5_wait_1.png",
+          "unit_5_wait_2.png"
+        ]
+      },
+      "walk": {
+        "updateDuration": 8,
+        "frames": [
+          "unit_5_walk_1.png",
+          "unit_5_walk_2.png",
+          "unit_5_walk_3.png",
+          "unit_5_walk_4.png",
+          "unit_5_walk_5.png",
+          "unit_5_walk_6.png"
+        ]
+      },
+      "attack": {
+        "updateDuration": 4,
+        "frames": [
+          "unit_5_attack_1.png",
+          "unit_5_attack_2.png",
+          "unit_5_attack_3.png",
+          "unit_5_attack_4.png",
+          "unit_5_attack_5.png",
+          "unit_5_attack_6.png",
+          "unit_5_attack_7.png",
+          "unit_5_attack_8.png",
+          "unit_5_attack_9.png"
+        ]
+      },
+      "damage": {
+        "updateDuration": 1,
+        "frames": [
+          "unit_5_damage_1.png"
+        ]
+      }
+    }
+  }
+]

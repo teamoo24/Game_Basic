@@ -45,7 +45,7 @@ export default class GameManager {
 		// PIXI Application生成
 		const game = new PIXI.Application(params.glWidth, params.glHeight, params.option);
 		// GameManager インスタンス生成
-    	const instance = new GameManager(game);
+  	const instance = new GameManager(game);
 		GameManager.instance = instance;
 
 		// canvasをDOMに追加

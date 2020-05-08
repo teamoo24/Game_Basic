@@ -1,6 +1,7 @@
-import * as PIXI from 'pixi.js';
 import GameManager from 'example/GameManager'
-import FirstScene from 'example/FirstScene'
+import TitleScene from 'example/TitleScene'
+import 'example/Config';
+
 
 window.onload = () => {
 	GameManager.start({
@@ -12,5 +13,5 @@ window.onload = () => {
 		view:document.getElementById("game")
 	})
 	// 最初のシーンの読み込み
-	GameManager.loadScene(new FirstScene());
+	GameManager.loadScene(new TitleScene());
 }
