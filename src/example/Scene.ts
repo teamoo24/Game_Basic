@@ -13,8 +13,21 @@ import Immediate from 'example/transition/Immediate'
  */
 export default abstract class Scene extends PIXI.Container {
 
+	/**
+	*	シーン開始用のトランジションオブジェクト
+	*/
 	protected transitionIn: Transition = new Immediate()
+	
+	/**
+	*	シーン終了用のトランジションオブジェクト
+	*/
 	protected transitionOut: Transition = new Immediate()
+
+	/**
+	*	更新すべきオブジェクトを保持する
+	*/
+	protected objectsToUpdate: UpdateObject[] = [];
+	
 	/**
    	* GameManager によって requestAnimationFrame 毎に呼び出されるメソッド
    	*/
@@ -32,7 +45,7 @@ export default abstract class Scene extends PIXI.Container {
    	* 更新処理を行うべきオブジェクトとして渡されたオブジェクトを登録する
    	*/
 	protected registerUpdatingObject(object: UpdateObject): void {
-		
+		this.objectsToUpdate.push(object);
 	}
 
 
@@ -40,7 +53,19 @@ export default abstract class Scene extends PIXI.Container {
 	* 更新処理を行うべきオブジェクトを更新する
   	*/
 	protected updateRegisteredObjects(delta: number): void {
+		const nextObjectsToUpdate = [];
 
+		for (let i = 0; i < this.objectsToUpdate.length; i++) {
+			const obj = this.objectsToUpdate[i];
+			if(!obj || obj.isDestroyed()) {
+				continue;
+			}
+			obj.update(delta);
+			nextObjectsToUpdate.push(obj);
+		}
+
+		this.objectsToUpdate = nextObjectsToUpdate;
+		
 	}
 
 
@@ -52,7 +77,6 @@ export default abstract class Scene extends PIXI.Container {
 		this.transitionIn.setCallback(() => onTransitionFinished(this));
 
 		const container = this.transitionIn.getContainer();
-
 		if (container) {
 			this.addChild(container);
 		}

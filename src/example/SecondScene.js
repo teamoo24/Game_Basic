@@ -17,7 +17,7 @@ export default class SecondScene extends Scene {
             fill: 0xffffff
         });
         const renderer = GameManager.instance.game.renderer;
-        this.text = new PIXI.Text('second scene', textStyle);
+        this.text = new PIXI.Text('Game Main', textStyle);
         this.text.interactive = true;
         this.text.anchor.set(0.5, 0.5);
         this.text.position.set(renderer.width * 0.5, renderer.height * 0.5);

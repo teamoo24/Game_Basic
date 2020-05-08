@@ -1,4 +1,5 @@
-import GameManager from './example/GameManager';
+import GameManager from 'example/GameManager';
+import FirstScene from 'example/FirstScene';
 window.onload = () => {
     GameManager.start({
         glWidth: 1136,
@@ -8,4 +9,6 @@ window.onload = () => {
         },
         view: document.getElementById("game")
     });
+    // 最初のシーンの読み込み
+    GameManager.loadScene(new FirstScene());
 };

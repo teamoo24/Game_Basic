@@ -7,16 +7,16 @@ export default class GameManager {
 	// PIXI.Applicationインスタンス
 	public game!: PIXI.Application;
 
-  	/**
-   	* シーンのトランジション完了フラグ
-   	* シーントランジションを制御するためのフラグ
-   	*/
-  	private sceneTransitionOutFinished: boolean = true;
-  	
-  	/**
-   	* 現在のシーンインスタンス
-   	*/
-  	private currentScene?: Scene;
+	/**
+ 	* シーンのトランジション完了フラグ
+ 	* シーントランジションを制御するためのフラグ
+ 	*/
+	private sceneTransitionOutFinished: boolean = true;
+	
+	/**
+ 	* 現在のシーンインスタンス
+ 	*/
+	private currentScene?: Scene;
 
 
 	/**
@@ -45,15 +45,13 @@ export default class GameManager {
 		const game = new PIXI.Application(params.glWidth, params.glHeight, params.option);
 		// GameManager インスタンス生成
     	const instance = new GameManager(game);
-		GameManager.instance = new GameManager(game);
+		GameManager.instance = instance;
 
 		// canvasをDOMに追加
 
 		//document.body.appendChild(game.view);
 		params.view.appendChild(game.view)
-		game.ticker.add((delta: number) => {
-			//メインループ
-		});
+		
 
 		 // メインループ
     	game.ticker.add((delta: number) => {
