@@ -10,6 +10,7 @@ export default class GameManager {
         * シーントランジションを制御するためのフラグ
         */
         this.sceneTransitionOutFinished = true;
+        this.sceneResourceLoaded = true;
         if (GameManager.instance) {
             throw new Error('GameManager can be instantiate only once');
         }
@@ -40,7 +41,7 @@ export default class GameManager {
     */
     static transitionInIfPossible(newScene) {
         const instance = GameManager.instance;
-        if (!instance.sceneTransitionOutFinished) {
+        if (!instance.sceneResourceLoaded || !instance.sceneTransitionOutFinished) {
             return false;
         }
         if (instance.currentScene) {
@@ -61,7 +62,12 @@ export default class GameManager {
     static loadScene(newScene) {
         const instance = GameManager.instance;
         if (instance.currentScene) {
+            instance.sceneResourceLoaded = false;
             instance.sceneTransitionOutFinished = false;
+            newScene.beginLoadResource(() => {
+                instance.sceneResourceLoaded = true;
+                GameManager.transitionInIfPossible(newScene);
+            });
             instance.currentScene.beginTransitionOut((_) => {
                 instance.sceneTransitionOutFinished = true;
                 GameManager.transitionInIfPossible(newScene);
@@ -69,7 +75,10 @@ export default class GameManager {
         }
         else {
             instance.sceneTransitionOutFinished = true;
-            GameManager.transitionInIfPossible(newScene);
+            newScene.beginLoadResource(() => {
+                instance.sceneResourceLoaded = true;
+                GameManager.transitionInIfPossible(newScene);
+            });
         }
     }
 }
