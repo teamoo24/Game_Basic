@@ -68,6 +68,24 @@ export default class Sound {
    		return playedTime
    	}
 
+ 	/**
+   	* paused の public ゲッタ
+   	*/
+  	public isPaused(): boolean {
+    	return this.paused;
+  	}
+
+
+   	public set volume(value: number) {
+   		if (this.gainNode) {
+   			this.gainNode.gain.value = value;
+   		}
+   	}
+
+   	public get volume():number {
+   		return this.gainNode ? this.gainNode.gain.value : -1;
+   	}
+
 
 
 	/**
@@ -143,11 +161,19 @@ export default class Sound {
 		if (this.paused || this.played || !this.source) {
 			return;
 		}
+		this.offset = this.elapsedTime;
+		this.stop();
+	}
+
+	/**
+   	* 再開
+   	*/
+	public resume(): void {
+		if (!this.paused || !this.played) {
+			return
+		}
 		this.play(this.loop, this.offset);
 
 		this.paused = false;
-	}
-	
-	public resume(): void {
 	}
 }
