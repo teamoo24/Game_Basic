@@ -18,46 +18,102 @@ export default class SoundManager {
 	public static get sharedContext(): AudioContext | null {
 		return SoundManager.context;
 	}
+   /**
+   * SoundManager がサポートするサウンドファイル拡張子
+   */
+   private static readonly supportedExtensions = ['mp3']
+
+   /**
+   * WebAudio 利用の初期化済みフラグ
+   */
+   private static webAudioInitialized:boolean = false;
 
 	/**
-   	* AudioCntext インスタンス
-   	*/
-   	private static context: AudioContext | null = null;
+	* AudioContext インスタンス
+	*/
+	private static context: AudioContext | null = null;
 
-   	/**
-   	* コンストラクタ
-   	*/
-   	constructor() {
-   		if (SoundManager.instance) {
-   			throw new Error('SoundManager can not be initialized twice');
-   		}
-   	}
+	/**
+	* コンストラクタ
+	*/
+	constructor() {
+		if (SoundManager.instance) {
+			throw new Error('SoundManager can not be initialized twice');
+		}
+	}
 
-   	/**
-   	* 初期化処理
-   	* ユーザで生成した AudioContext を渡すこともできる
-   	*/
-   	public static init(ctx?: AudioContext):void {
-   		if (SoundManager.instance) {
-   			return;
-   		}
+	/**
+	* 初期化処理
+	* ユーザで生成した AudioContext を渡すこともできる
+	*/
+	public static init(ctx?: AudioContext):void {
+		if (SoundManager.instance) {
+			return;
+		}
 
-   		SoundManager.instance = new SoundManager();
+		SoundManager.instance = new SoundManager();
 
-   		if (ctx) {
-   			SoundManager.context = ctx;
-   		} else {
-   			const AudioContextClass = (window as any).AudioContext || (window as any).webkitAudio;
-   			SoundManager.context = new AudioContextClass();
-   		}
+		if (ctx) {
+			SoundManager.context = ctx;
+		} else {
+			const AudioContextClass = (window as any).AudioContext || (window as any).webkitAudio;
+			SoundManager.context = new AudioContextClass();
+		}
 
-   		const browser = detect();
-   		if(!browser) {
-   			return;
-   		}
+		const browser = detect();
+      if (!browser) {
+         return;
+      }
 
+      SoundManager.useWebAudio(browser);
+	}
 
-   	}
+   /**
+   * オーディオデータをパースするための PIXI.Loader ミドルウェアを登録する
+   */
+   public static useWebAudio(browser: BrowserInfo | BotInfo | NodeInfo): void {
+      if (SoundManager.webAudioInitialized) {
+         return
+      };
+
+      const supportedExtensions = SoundManager.supportedExtensions;
+
+      for (let i = 0; i<supportedExtensions.length; i++) {
+         const extension = supportedExtensions[i];
+         const PixiResource = PIXI.loaders.Loader.Resource;
+         PixiResource.setExtensionXhrType(
+            extension,
+            PixiResource.XHR_RESPONSE_TYPE.BUFFER
+         );
+         PixiResource.setExtensionLoadType(
+            extension,
+            PixiResource.LOAD_TYPE.XHR
+         )
+      }
+
+      // Chrome の一部バージョンでサウンドのデコード方法が異なるためメソッドを変える
+      const majorVersion = (browser.version) ? browser.version.split('.')[0] : '0';
+      let mathodName = 'decodeAudio';
+      if (browser.name == 'chrome' && Number.parseInt(majorVersion, 10) === 64) {
+         mathodName = 'decodeAudioWithPromise';
+      }
+
+      // resource-loader ミドルウェアの登録
+      PIXI.loader.use((resource: any, next: Function)=> {
+         const extension = resource.url.split('?')[0].split('.')[1];
+         if (extension && supportedExtensions.indexOf(extension) !== -1) {
+            // リソースにbufferという名前でプロパティを増やす
+            (SoundManager as any)[mathodName](resource.data, (buf: AudioBuffer) => {
+               resource.buffer = buf;
+               next();
+            })
+         } else {
+            next();
+         }
+      });
+
+      SoundManager.webAudioInitialized = true;
+   }
 
 	/**
 	* サウンドを初期化するためのイベントを登録する
@@ -96,4 +152,29 @@ export default class SoundManager {
 
 		document.body.addEventListener(eventName, soundInitializer);
 	}
+
+   /**
+   * オーディオデータのデコード処理
+   */
+   public static decodeAudio(
+      binary : any,
+      callback : (buf: AudioBuffer) => void
+      ): void{
+      if (SoundManager.sharedContext) {
+         SoundManager.sharedContext.decodeAudioData(binary, callback);
+      }
+   }
+
+   /**
+   * オーディオデータのデコード処理
+   * ブラウザ種別やバージョンによっては I/F が異なるため、こちらを使う必要がある
+   */
+   public static decodeAudioWithPromise(
+      binary: any,
+      callback : (buf: AudioBuffer) => void
+      ): void {
+      if (SoundManager.sharedContext) {
+         SoundManager.sharedContext.decodeAudioData(binary).then(callback);
+      }
+   }
 }

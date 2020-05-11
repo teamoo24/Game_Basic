@@ -39,6 +39,24 @@ export default class SoundManager {
         if (!browser) {
             return;
         }
+        SoundManager.useWebAudio(browser);
+    }
+    /**
+    * オーディオデータをパースするための PIXI.Loader ミドルウェアを登録する
+    */
+    static useWebAudio(browser) {
+        if (SoundManager.webAudioInitialized) {
+            return;
+        }
+        ;
+        const supportedExtensions = SoundManager.supportedExtensions;
+        for (let i = 0; i < supportedExtensions.length; i++) {
+            const extension = supportedExtensions[i];
+            const PixiResource = PIXI.loaders.Loader.Resource;
+            PixiResource.setExtensionXhrType(extension, PixiResource.XHR_RESPONSE_TYPE.BUFFER);
+            PixiResource.setExtensionLoadType(extension, PixiResource.LOAD_TYPE.XHR);
+        }
+        SoundManager.webAudioInitialized = true;
     }
     /**
     * サウンドを初期化するためのイベントを登録する
@@ -76,6 +94,14 @@ export default class SoundManager {
     }
 }
 /**
-* AudioCntext インスタンス
+* SoundManager がサポートするサウンドファイル拡張子
+*/
+SoundManager.supportedExtensions = ['mp3'];
+/**
+* WebAudio 利用の初期化済みフラグ
+*/
+SoundManager.webAudioInitialized = false;
+/**
+* AudioContext インスタンス
 */
 SoundManager.context = null;
