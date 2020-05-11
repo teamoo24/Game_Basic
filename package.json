@@ -25,6 +25,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "detect-browser": "^5.1.0",
     "pixi.js": "^4.8.3"
   }
 }

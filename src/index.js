@@ -1,5 +1,6 @@
 import GameManager from 'example/GameManager';
 import TitleScene from 'example/TitleScene';
+import 'example/Config';
 window.onload = () => {
     GameManager.start({
         glWidth: 1136,

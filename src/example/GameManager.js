@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import SoundManager from 'example/SoundManager';
 export default class GameManager {
     /**
     * コンストラクタ
@@ -26,7 +27,8 @@ export default class GameManager {
         // GameManager インスタンス生成
         const instance = new GameManager(game);
         GameManager.instance = instance;
-        // canvasをDOMに追加
+        SoundManager.init();
+        // canvas を DOM に追加
         //document.body.appendChild(game.view);
         params.view.appendChild(game.view);
         // メインループ

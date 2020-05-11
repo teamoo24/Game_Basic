@@ -32,6 +32,13 @@
 			'battle/bg_3_2.png',
 			'battle/bg_3_3.png'
 		]
+	},
+	Audio: {
+		Bgm: {
+			Title: 'audio/bgm_title.mp3'
+		},
+		Se: {
+		}
 	}
 });
 
