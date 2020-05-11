@@ -3,6 +3,7 @@ import GameManager from './GameManager';
 import Scene from './Scene';
 import Resource from './Resource';
 import Fade from './transition/Fade';
+import Sound from 'example/Sound';
 export default class TitleScene extends Scene {
     constructor() {
         super();
@@ -60,6 +61,7 @@ export default class TitleScene extends Scene {
         this.addChild(this.text);
         this.interactive = true;
         this.on('pointerup', () => this.showOrderScene());
+        new Sound(resources[Resource.Audio.Bgm.Title].buffer).play();
     }
     /**
     * タップされたときのコールバック
