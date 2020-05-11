@@ -5,6 +5,8 @@ import Resource from './Resource';
 import Fade from './transition/Fade';
 import LoaderAddParam from '../interfaces/PixiTypePolyfill/LoaderAddParam';
 
+import Sound from 'example/Sound';
+
 export default class TitleScene extends Scene {
 	private text!: PIXI.Text;
 
@@ -75,6 +77,8 @@ export default class TitleScene extends Scene {
 
 		this.interactive = true;
 		this.on('pointerup', () => this.showOrderScene());
+
+		new Sound((resources[Resource.Audio.Bgm.Title] as any).buffer).play();
 	}
 
 	/**

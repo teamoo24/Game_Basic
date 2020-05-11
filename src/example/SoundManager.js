@@ -56,6 +56,26 @@ export default class SoundManager {
             PixiResource.setExtensionXhrType(extension, PixiResource.XHR_RESPONSE_TYPE.BUFFER);
             PixiResource.setExtensionLoadType(extension, PixiResource.LOAD_TYPE.XHR);
         }
+        // Chrome の一部バージョンでサウンドのデコード方法が異なるためメソッドを変える
+        const majorVersion = (browser.version) ? browser.version.split('.')[0] : '0';
+        let mathodName = 'decodeAudio';
+        if (browser.name == 'chrome' && Number.parseInt(majorVersion, 10) === 64) {
+            mathodName = 'decodeAudioWithPromise';
+        }
+        // resource-loader ミドルウェアの登録
+        PIXI.loader.use((resource, next) => {
+            const extension = resource.url.split('?')[0].split('.')[1];
+            if (extension && supportedExtensions.indexOf(extension) !== -1) {
+                // リソースにbufferという名前でプロパティを増やす
+                SoundManager[mathodName](resource.data, (buf) => {
+                    resource.buffer = buf;
+                    next();
+                });
+            }
+            else {
+                next();
+            }
+        });
         SoundManager.webAudioInitialized = true;
     }
     /**
@@ -91,6 +111,23 @@ export default class SoundManager {
             return;
         }
         document.body.addEventListener(eventName, soundInitializer);
+    }
+    /**
+    * オーディオデータのデコード処理
+    */
+    static decodeAudio(binary, callback) {
+        if (SoundManager.sharedContext) {
+            SoundManager.sharedContext.decodeAudioData(binary, callback);
+        }
+    }
+    /**
+    * オーディオデータのデコード処理
+    * ブラウザ種別やバージョンによっては I/F が異なるため、こちらを使う必要がある
+    */
+    static decodeAudioWithPromise(binary, callback) {
+        if (SoundManager.sharedContext) {
+            SoundManager.sharedContext.decodeAudioData(binary).then(callback);
+        }
     }
 }
 /**
