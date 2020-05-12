@@ -60,6 +60,20 @@ export default class Sound {
         return playedTime;
     }
     /**
+    * paused の public ゲッタ
+    */
+    isPaused() {
+        return this.paused;
+    }
+    set volume(value) {
+        if (this.gainNode) {
+            this.gainNode.gain.value = value;
+        }
+    }
+    get volume() {
+        return this.gainNode ? this.gainNode.gain.value : -1;
+    }
+    /**
     * 再生開始
     */
     play(loop = false, offset = 0) {
@@ -110,9 +124,17 @@ export default class Sound {
         if (this.paused || this.played || !this.source) {
             return;
         }
+        this.offset = this.elapsedTime;
+        this.stop();
+    }
+    /**
+    * 再開
+    */
+    resume() {
+        if (!this.paused || !this.played) {
+            return;
+        }
         this.play(this.loop, this.offset);
         this.paused = false;
-    }
-    resume() {
     }
 }

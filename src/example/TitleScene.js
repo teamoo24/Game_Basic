@@ -7,10 +7,12 @@ import Sound from 'example/Sound';
 export default class TitleScene extends Scene {
     constructor() {
         super();
+        this.sound = null;
         this.transitionIn = new Fade(1.0, 0.0, -0.02);
         this.transitionOut = new Fade(0.0, 1.0, 0.02);
         const renderer = GameManager.instance.game.renderer;
         this.text = new PIXI.Text('TOUCH TO START', new PIXI.TextStyle({
+            fontFamily: 'MisakiGothic',
             fontSize: 64,
             fill: 0xffffff
         }));
@@ -61,12 +63,19 @@ export default class TitleScene extends Scene {
         this.addChild(this.text);
         this.interactive = true;
         this.on('pointerup', () => this.showOrderScene());
-        new Sound(resources[Resource.Audio.Bgm.Title].buffer).play();
+        this.sound = new Sound(resources[Resource.Audio.Bgm.Title].buffer);
+        this.sound.volume = 0.25;
+        this.sound.play();
     }
     /**
     * タップされたときのコールバック
     */
     showOrderScene() {
         console.log("should go to order scene");
+        if (this.sound) {
+            (this.sound.isPaused())
+                ? this.sound.resume()
+                : this.sound.pause();
+        }
     }
 }
