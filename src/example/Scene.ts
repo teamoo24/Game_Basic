@@ -29,84 +29,89 @@ export default abstract class Scene extends PIXI.Container {
 	*/
 	protected objectsToUpdate: UpdateObject[] = [];
 	
+   /**
+   * 経過フレーム数
+   */
+   protected elapsedFrameCount: number = 0;
+  	
+   /**
+   * リソースリストを作成し返却する
+   */
+   protected createInitialResourceList(): (LoaderAddParam | string)[] {
+   	return [];
+   }
+
+   /**
+   * リソースダウンロードのフローを実行する
+   */
+   public beginLoadResource(onLoaded: () => void): Promise<void> {
+   	return new Promise((resolve) => {
+   		this.loadInitialResource(() => resolve());
+   	}).then(() => {
+   		onLoaded();
+   	}).then(() => {
+   		this.onResourceLoaded();
+   	});
+   }
+
+   /**
+   * 最初に指定されたリソースをダウンロードする
+   */
+   protected loadInitialResource(onLoaded: () => void): void {
+   	const assets = this.createInitialResourceList();
+   	const filteredAssets = this.filterLoadedAssets(assets);
+
+   	if (filteredAssets.length > 0) {
+   		PIXI.loader.add(filteredAssets).load(() => onLoaded());
+   	} else {
+   		onLoaded();
+   	} 
+   }
+
+   /**
+   *　beginLoadResource完了時のコールバックメソッド
+   */
+   protected onResourceLoaded(): void {
+   }
+
   	/**
-   	* リソースリストを作成し返却する
-   	*/
-   	protected createInitialResourceList(): (LoaderAddParam | string)[] {
-   		return [];
-   	}
+   * 渡されたアセットのリストからロード済みのものをフィルタリングする
+   */
+   private filterLoadedAssets(assets: (LoaderAddParam | string) []):LoaderAddParam[]
+   {
+   	const assetMap = new Map<string, LoaderAddParam>();
 
-   	/**
-   	* リソースダウンロードのフローを実行する
-   	*/
-   	public beginLoadResource(onLoaded: () => void): Promise<void> {
-   		return new Promise((resolve) => {
-   			this.loadInitialResource(() => resolve());
-   		}).then(() => {
-   			onLoaded();
-   		}).then(() => {
-   			this.onResourceLoaded();
-   		});
-   	}
-
-   	/**
-   	* 最初に指定されたリソースをダウンロードする
-   	*/
-   	protected loadInitialResource(onLoaded: () => void): void {
-   		const assets = this.createInitialResourceList();
-   		const filteredAssets = this.filterLoadedAssets(assets);
-
-   		if (filteredAssets.length > 0) {
-   			PIXI.loader.add(filteredAssets).load(() => onLoaded());
+   	for (let i = 0; i < assets.length; i++) {
+   		const asset = assets[i];
+   		if (typeof asset == 'string') {
+   			if (!PIXI.loader.resources[asset] && !assetMap.has(asset)) {
+   				assetMap.set(asset, {name: asset, url: asset});
+   			}
    		} else {
-   			onLoaded();
-   		} 
-   	}
-
-   	/**
-   	*　beginLoadResource完了時のコールバックメソッド
-   	*/
-   	protected onResourceLoaded(): void {
-   	}
-
-  	/**
-   	* 渡されたアセットのリストからロード済みのものをフィルタリングする
-   	*/
-   	private filterLoadedAssets(assets: (LoaderAddParam | string) []):LoaderAddParam[]
-   	{
-   		const assetMap = new Map<string, LoaderAddParam>();
-
-   		for (let i = 0; i < assets.length; i++) {
-   			const asset = assets[i];
-   			if (typeof asset == 'string') {
-   				if (!PIXI.loader.resources[asset] && !assetMap.has(asset)) {
-   					assetMap.set(asset, {name: asset, url: asset});
-   				}
-   			} else {
-   				if (!PIXI.loader.resources[asset.name] && !assetMap.has(asset.name)) {
-   					assetMap.set(asset.name, asset);
-   				}
+   			if (!PIXI.loader.resources[asset.name] && !assetMap.has(asset.name)) {
+   				assetMap.set(asset.name, asset);
    			}
    		}
-   		return Array.from(assetMap.values())
    	}
+   	return Array.from(assetMap.values())
+   }
 
 	/**
    	* GameManager によって requestAnimationFrame 毎に呼び出されるメソッド
    	*/
 	public update(delta : number): void {
+      this.elapsedFrameCount++;
 		if (this.transitionIn.isActive()) {
 			this.transitionIn.update(delta);
 		} else if (this.transitionOut.isActive()) {
 			this.transitionOut.update(delta);
 		}
-
 	}
 	
 
 	/**
-   	* 更新処理を行うべきオブジェクトとして渡されたオブジェクトを登録する
-   	*/
+   * 更新処理を行うべきオブジェクトとして渡されたオブジェクトを登録する
+   */
 	protected registerUpdatingObject(object: UpdateObject): void {
 		this.objectsToUpdate.push(object);
 	}
@@ -149,17 +154,17 @@ export default abstract class Scene extends PIXI.Container {
 
 
 	/**
-   	* シーン削除トランジション開始
-   	* 引数でトランジション終了時のコールバックを指定できる
-   	*/
-   	public beginTransitionOut(onTransitionFinished: (scene: Scene) => void):void {
-   		this.transitionOut.setCallback(() => onTransitionFinished(this));
+   * シーン削除トランジション開始
+   * 引数でトランジション終了時のコールバックを指定できる
+   */
+   public beginTransitionOut(onTransitionFinished: (scene: Scene) => void):void {
+   	this.transitionOut.setCallback(() => onTransitionFinished(this));
 
-   		const container = this.transitionOut.getContainer();
-   		if (container) {
-   			this.addChild(container);
-   		}
-
-   		this.transitionOut.begin();
+   	const container = this.transitionOut.getContainer();
+   	if (container) {
+   		this.addChild(container);
    	}
+
+   	this.transitionOut.begin();
+   }
 }

@@ -21,6 +21,10 @@ export default class Scene extends PIXI.Container {
         *	更新すべきオブジェクトを保持する
         */
         this.objectsToUpdate = [];
+        /**
+        * 経過フレーム数
+        */
+        this.elapsedFrameCount = 0;
     }
     /**
     * リソースリストを作成し返却する
@@ -59,8 +63,8 @@ export default class Scene extends PIXI.Container {
     onResourceLoaded() {
     }
     /**
-    * 渡されたアセットのリストからロード済みのものをフィルタリングする
-    */
+   * 渡されたアセットのリストからロード済みのものをフィルタリングする
+   */
     filterLoadedAssets(assets) {
         const assetMap = new Map();
         for (let i = 0; i < assets.length; i++) {
@@ -82,6 +86,7 @@ export default class Scene extends PIXI.Container {
     * GameManager によって requestAnimationFrame 毎に呼び出されるメソッド
     */
     update(delta) {
+        this.elapsedFrameCount++;
         if (this.transitionIn.isActive()) {
             this.transitionIn.update(delta);
         }
@@ -90,8 +95,8 @@ export default class Scene extends PIXI.Container {
         }
     }
     /**
-    * 更新処理を行うべきオブジェクトとして渡されたオブジェクトを登録する
-    */
+   * 更新処理を行うべきオブジェクトとして渡されたオブジェクトを登録する
+   */
     registerUpdatingObject(object) {
         this.objectsToUpdate.push(object);
     }
@@ -123,9 +128,9 @@ export default class Scene extends PIXI.Container {
         this.transitionIn.begin();
     }
     /**
-    * シーン削除トランジション開始
-    * 引数でトランジション終了時のコールバックを指定できる
-    */
+   * シーン削除トランジション開始
+   * 引数でトランジション終了時のコールバックを指定できる
+   */
     beginTransitionOut(onTransitionFinished) {
         this.transitionOut.setCallback(() => onTransitionFinished(this));
         const container = this.transitionOut.getContainer();

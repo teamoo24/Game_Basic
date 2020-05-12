@@ -10,6 +10,10 @@ export default class TitleScene extends Scene {
     */
     constructor() {
         super();
+        /**
+        * テキストを明滅させる間隔
+        */
+        this.textAppealDuration = 20;
         this.sound = null;
         this.transitionIn = new Fade(1.0, 0.0, -0.02);
         this.transitionOut = new Fade(0.0, 1.0, 0.02);
@@ -60,6 +64,13 @@ export default class TitleScene extends Scene {
         this.sound = new Sound(resources[Resource.Audio.Bgm.Title].buffer);
         this.sound.volume = 0.25;
         this.sound.play();
+    }
+    update(dt) {
+        super.update(dt);
+        if (this.elapsedFrameCount % this.textAppealDuration === 0) {
+            const visible = this.text.visible;
+            this.text.visible = !visible;
+        }
     }
     /**
     * タップされたときのコールバック
