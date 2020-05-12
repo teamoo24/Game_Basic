@@ -5,25 +5,19 @@ import Resource from './Resource';
 import Fade from './transition/Fade';
 import Sound from 'example/Sound';
 export default class TitleScene extends Scene {
+    /**
+    * コンストラクタ
+    */
     constructor() {
         super();
         this.sound = null;
         this.transitionIn = new Fade(1.0, 0.0, -0.02);
         this.transitionOut = new Fade(0.0, 1.0, 0.02);
-        const renderer = GameManager.instance.game.renderer;
-        this.text = new PIXI.Text('TOUCH TO START', new PIXI.TextStyle({
-            fontFamily: 'MisakiGothic',
-            fontSize: 64,
-            fill: 0xffffff
-        }));
-        this.text.anchor.set(0.5, 0.5);
-        this.text.position.set(renderer.width * 0.5, renderer.height * 0.5);
-        this.addChild(this.text);
         this.interactive = true;
         this.on('pointerup', () => this.showOrderScene());
     }
     /**
-    *　リソースリストを作成し返却する
+    * リソースリストを作成し返却する
     */
     createInitialResourceList() {
         let assets = super.createInitialResourceList();
@@ -39,6 +33,7 @@ export default class TitleScene extends Scene {
     */
     onResourceLoaded() {
         super.onResourceLoaded();
+        const renderer = GameManager.instance.game.renderer;
         const resources = PIXI.loader.resources;
         const bgOrder = [
             Resource.Static.BattleBgBacks,
@@ -53,16 +48,15 @@ export default class TitleScene extends Scene {
                 this.addChild(sprite);
             }
         }
-        const renderer = GameManager.instance.game.renderer;
         this.text = new PIXI.Text('TOUCH TO START', new PIXI.TextStyle({
+            fontFamily: 'MisakiGothic',
             fontSize: 64,
-            fill: 0xffffff
+            fill: 0xffffff,
+            padding: 14
         }));
         this.text.anchor.set(0.5, 0.5);
         this.text.position.set(renderer.width * 0.5, renderer.height * 0.5);
         this.addChild(this.text);
-        this.interactive = true;
-        this.on('pointerup', () => this.showOrderScene());
         this.sound = new Sound(resources[Resource.Audio.Bgm.Title].buffer);
         this.sound.volume = 0.25;
         this.sound.play();

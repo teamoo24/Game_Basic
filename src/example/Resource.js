@@ -37,6 +37,10 @@ const Resource = Object.freeze({
             Title: 'audio/bgm_title.mp3'
         },
         Se: {}
+    },
+    FontFamily: {
+        Css: 'base.css',
+        Default: 'MisakiGothic'
     }
 });
 export default Resource;

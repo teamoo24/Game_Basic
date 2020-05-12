@@ -39,7 +39,11 @@
 		},
 		Se: {
 		}
-	}
+	},
+	FontFamily: {
+    	Css: 'base.css',
+    	Default: 'MisakiGothic'
+  	}
 });
 
  export default Resource;
