@@ -33,10 +33,27 @@ export default abstract class Scene extends PIXI.Container {
 
 	}
 
-
+	
 	/**
   	* シーン追加トランジション開始
    	* 引数でトランジション終了時のコールバックを指定できる
+   	*
+   	onTransitionFinished: (scene: Scene) => void
+
+	==>
+
+   	onTransitionFinished(scene:Scene):void {
+	}
+
+	=============================
+
+	(scene: Scene) => void
+
+	==>
+
+	function(scene:Scene):void {
+	
+	}
    	*/
 	public beginTransitionIn(onTransitionFinished: (scene: Scene) => void):void {
 		onTransitionFinished(this);

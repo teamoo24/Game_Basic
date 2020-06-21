@@ -7,29 +7,29 @@ export default class GameManager {
 	// PIXI.Applicationインスタンス
 	public game!: PIXI.Application;
 
-  	/**
-   	* シーンのトランジション完了フラグ
-   	* シーントランジションを制御するためのフラグ
-   	*/
-  	private sceneTransitionOutFinished: boolean = true;
-  	
-  	/**
-   	* 現在のシーンインスタンス
-   	*/
-  	private currentScene?: Scene;
+  /**
+  * シーンのトランジション完了フラグ
+  * シーントランジションを制御するためのフラグ
+  */
+  private sceneTransitionOutFinished: boolean = true;
+
+  /**
+  * 現在のシーンインスタンス
+  */
+  private currentScene?: Scene;
 
 
 	/**
 	* コンストラクタ
 	* PIXI.Applicationインスタンスはユーザーイン委のものを使用する
 	*/
-	constructor(app: PIXI.Application) {
-		if (GameManager.instance) {
-			throw new Error('GameManager can be instantiate only once');
-		}
+  constructor(app: PIXI.Application) {
+    if (GameManager.instance) {
+      throw new Error('GameManager can be instantiate only once');
+    }
 
-		this.game = app;
-	}
+    this.game = app;
+  }
 
 	/** 
 	* ゲームを起動する
@@ -39,29 +39,25 @@ export default class GameManager {
 		glWidth: number,
 		glHeight: number,
 		option?: PIXI.ApplicationOptions,
-		view?: HTMLCanvasElement
-	}) : void {
-		// PIXI Application生成
-		const game = new PIXI.Application({
-      view:params.view,
-      width:params.glWidth,
-      height:params.glHeight
-    });
-		// GameManager インスタンス生成
-    const instance = new GameManager(game);
-		GameManager.instance = new GameManager(game);
+		view?: HTMLCanvasElement}
+    ) : void {
+  		// PIXI Application生成
+  		const game = new PIXI.Application({
+        view:params.view,
+        width:params.glWidth,
+        height:params.glHeight
+      });
+  		// GameManager インスタンス生成
+      const instance = new GameManager(game);
+  		GameManager.instance = instance;
 
-		// canvasをDOMに追加
-		game.ticker.add((delta: number) => {
-			//メインループ
-		});
-
-		 // メインループ
-    	game.ticker.add((delta: number) => {
-      		if (instance.currentScene) {
-        		instance.currentScene.update(delta);
-      		}
-    	});
+  		// canvasをDOMに追加
+  		game.ticker.add((delta: number) => {
+  			//メインループ
+        if(instance.currentScene) {
+          instance.currentScene.update(delta);
+        }
+  		});
 	}
 
 
@@ -97,13 +93,20 @@ export default class GameManager {
    	public static loadScene(newScene: Scene):void {
    		const instance = GameManager.instance;
 
+      //現在インスタンスにシーンがある場合
    		if (instance.currentScene) {
+        //console.log("has instance")
    			instance.sceneTransitionOutFinished = false;
-   			instance.currentScene.beginTransitionOut((_:Scene) => {
-   				instance.sceneTransitionOutFinished =true;
-   				GameManager.transitionInIfPossible(newScene);
-   			});
-   		} else {
+   			instance.currentScene.beginTransitionOut(
+           (_:Scene) => {
+   				  instance.sceneTransitionOutFinished =true;
+   				  GameManager.transitionInIfPossible(newScene);
+   			  }
+        );
+   		}
+      //現在インスタンスにシーンがない場合 
+      else {
+        //console.log("has no instance")
    			instance.sceneTransitionOutFinished = true;
    			GameManager.transitionInIfPossible(newScene);
    		}
