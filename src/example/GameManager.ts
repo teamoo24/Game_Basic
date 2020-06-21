@@ -39,18 +39,19 @@ export default class GameManager {
 		glWidth: number,
 		glHeight: number,
 		option?: PIXI.ApplicationOptions,
-		view?: HTMLElement
+		view?: HTMLCanvasElement
 	}) : void {
 		// PIXI Application生成
-		const game = new PIXI.Application(params.glWidth, params.glHeight, params.option);
+		const game = new PIXI.Application({
+      view:params.view,
+      width:params.glWidth,
+      height:params.glHeight
+    });
 		// GameManager インスタンス生成
-    	const instance = new GameManager(game);
+    const instance = new GameManager(game);
 		GameManager.instance = new GameManager(game);
 
 		// canvasをDOMに追加
-
-		//document.body.appendChild(game.view);
-		params.view.appendChild(game.view)
 		game.ticker.add((delta: number) => {
 			//メインループ
 		});

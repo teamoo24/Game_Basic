@@ -9,7 +9,7 @@ window.onload = () => {
 		option: {
 			backgroundColor: 0x222222
 		},
-		view:document.getElementById("game")
+		view:<HTMLCanvasElement>document.getElementById("game")
 	})
 	// 最初のシーンの読み込み
 	GameManager.loadScene(new FirstScene());
