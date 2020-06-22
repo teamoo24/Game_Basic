@@ -13,13 +13,18 @@ export default class Fade {
 	private container = new PIXI.Container();
 	// 黒画面の描画
 	private overlay = new PIXI.Graphics();
+	//FadeInチェック
+	public isFadein:boolean
+	public isFadeOut:boolean
 
-	constructor(container: PIXI.Container,alphaProgress: number,){
+	constructor(container: PIXI.Container,alphaProgress: number){
 
 		this.alphaFrom = 1;
 		this.alphaTo = 0;
 		this.alphaProgress = alphaProgress;
-		this.container = container
+		this.container = container;
+		this.isFadein = false;
+		this.isFadeOut = false;
 
 		const width = GameManager.instance.game.view.width;
 		const height = GameManager.instance.game.view.height;
@@ -41,9 +46,28 @@ export default class Fade {
 	public FadeIn():boolean {
 		if(this.overlay.alpha > this.alphaTo) {
 			this.overlay.alpha -= this.alphaProgress
+
+			if(this.overlay.alpha < this.alphaTo) {
+				this.overlay.alpha = this.alphaTo
+				this.isFadein = true;
+			}
 			return false
-		} else {
+		} else if(this.overlay.alpha <= this.alphaTo && this.isFadein){
 			return true;
+		}
+	}
+
+	public FadeOut():boolean {
+		if(this.overlay.alpha < this.alphaFrom) {
+			this.overlay.alpha += this.alphaProgress
+
+			if(this.overlay.alpha > this.alphaFrom) {
+				this.overlay.alpha = this.alphaFrom
+				this.isFadeOut = true;
+			}
+			return false;
+		} else if(this.overlay.alpha >= this.alphaTo && this.isFadeOut) {
+			return true
 		}
 	}
 }

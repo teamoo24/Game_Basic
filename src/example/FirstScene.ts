@@ -10,6 +10,7 @@ export default class FirstScene extends Scene {
 	// メインループ更新を確認するためのカウント
 	private count: number = 0;
 	private fade:Fade;
+	private fadeout:boolean
 	/**
 	*	コンストラクタ
 	*	描画物を初期化する。
@@ -28,6 +29,8 @@ export default class FirstScene extends Scene {
 		this.text.on('pointerdown', this.nextScene);
 		this.addChild(this.text);
 
+		this.fadeout =false;
+
 		this.fade = new Fade(this,0.01);
 	}
 
@@ -36,7 +39,21 @@ export default class FirstScene extends Scene {
    	*/
    	public update(dt: number): void {
    		super.update(dt);
-   		this.fade.FadeIn();
+ 	  	if(!this.fade.isFadein) {
+ 	  		this.fade.FadeIn()
+ 	  	}
+ 	  	if(this.fade.isFadein) {
+ 	  		console.log("done")
+ 	  	}
+
+ 	  	if(this.fadeout && !this.fade.isFadeOut) {
+
+ 	  		this.fade.FadeOut()
+ 	  	}
+ 	  	if(this.fade.isFadeOut) {
+ 	  		console.log("FadeOut")
+   			GameManager.loadScene(new SecondScene());
+ 	  	}
    		this.text.text = `Game Start \n${this.count++}`;
    	}
 
@@ -44,6 +61,7 @@ export default class FirstScene extends Scene {
    	* 次のシーンへの遷移
    	*/
    	public nextScene(): void {
-   		GameManager.loadScene(new SecondScene());
+   		console.log("asfas")
+   		this.fadeout = true
    	}
 }
