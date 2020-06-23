@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
-import GameManager from 'example/GameManager'
-import FirstScene from 'example/FirstScene'
+import GameManager from 'Manager/GameManager'
+import FirstScene from 'Scene/FirstScene'
 
 window.onload = () => {
 	GameManager.start({

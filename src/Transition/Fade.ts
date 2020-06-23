@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import GameManager from 'example/GameManager'
+import GameManager from 'Manager/GameManager'
 
 export default class Fade {
 
