@@ -9,8 +9,8 @@ export default class FirstScene extends Scene {
 	private text!: PIXI.Text;
 	// メインループ更新を確認するためのカウント
 	private count: number = 0;
-	private fade:Fade;
-	private fadeout:boolean
+	private static fade:Fade;
+	private static fornextScene:boolean
 	/**
 	*	コンストラクタ
 	*	描画物を初期化する。
@@ -29,9 +29,10 @@ export default class FirstScene extends Scene {
 		this.text.on('pointerdown', this.nextScene);
 		this.addChild(this.text);
 
-		this.fadeout =false;
+		FirstScene.fornextScene = false;
 
-		this.fade = new Fade(this,0.01);
+		FirstScene.fade = new Fade(this,0.01);
+
 	}
 
   	/**
@@ -39,19 +40,19 @@ export default class FirstScene extends Scene {
    	*/
    	public update(dt: number): void {
    		super.update(dt);
- 	  	if(!this.fade.isFadein) {
- 	  		this.fade.FadeIn()
+ 	  	if(!FirstScene.fade.isFadein) {
+ 	  		//fadein実行
+ 	  		FirstScene.fade.FadeIn()
  	  	}
- 	  	if(this.fade.isFadein) {
- 	  		console.log("done")
+ 	  	if(FirstScene.fade.isFadein) {
+ 	  		//fadein完了の時
  	  	}
-
- 	  	if(this.fadeout && !this.fade.isFadeOut) {
-
- 	  		this.fade.FadeOut()
+ 	  	if(FirstScene.fornextScene) {
+ 	  		//fadeout実行
+ 	  		FirstScene.fade.FadeOut()
  	  	}
- 	  	if(this.fade.isFadeOut) {
- 	  		console.log("FadeOut")
+ 	  	if(FirstScene.fade.isFadeOut) {
+ 	  		//fadeout完了の時
    			GameManager.loadScene(new SecondScene());
  	  	}
    		this.text.text = `Game Start \n${this.count++}`;
@@ -61,7 +62,6 @@ export default class FirstScene extends Scene {
    	* 次のシーンへの遷移
    	*/
    	public nextScene(): void {
-   		console.log("asfas")
-   		this.fadeout = true
+   		FirstScene.fornextScene = true
    	}
 }

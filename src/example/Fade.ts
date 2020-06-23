@@ -44,30 +44,35 @@ export default class Fade {
 	}
 
 	public FadeIn():boolean {
-		if(this.overlay.alpha > this.alphaTo) {
-			this.overlay.alpha -= this.alphaProgress
+		if(!this.isFadein) {
+			if(this.overlay.alpha > this.alphaTo) {
+				this.overlay.alpha -= this.alphaProgress
 
 			if(this.overlay.alpha < this.alphaTo) {
 				this.overlay.alpha = this.alphaTo
 				this.isFadein = true;
 			}
-			return false
-		} else if(this.overlay.alpha <= this.alphaTo && this.isFadein){
-			return true;
+				return false
+			} else if(this.overlay.alpha <= this.alphaTo && this.isFadein){
+				return true;
+			}
 		}
 	}
 
 	public FadeOut():boolean {
-		if(this.overlay.alpha < this.alphaFrom) {
-			this.overlay.alpha += this.alphaProgress
+		if(!this.isFadeOut && this.isFadein) {
+			this.isFadein = true
+			if(this.overlay.alpha < this.alphaFrom) {
+				this.overlay.alpha += this.alphaProgress
 
-			if(this.overlay.alpha > this.alphaFrom) {
-				this.overlay.alpha = this.alphaFrom
-				this.isFadeOut = true;
+				if(this.overlay.alpha > this.alphaFrom) {
+					this.overlay.alpha = this.alphaFrom
+					this.isFadeOut = true
+				}
+				return false;
+			} else if(this.overlay.alpha >= this.alphaFrom && this.isFadeOut) {
+				return true
 			}
-			return false;
-		} else if(this.overlay.alpha >= this.alphaTo && this.isFadeOut) {
-			return true
 		}
 	}
 }
