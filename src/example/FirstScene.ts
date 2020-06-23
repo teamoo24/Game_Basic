@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 import GameManager from 'example/GameManager'
 import Scene from 'example/Scene'
 import SecondScene from 'example/SecondScene'
-import Fade from 'example/Fade'
+import Fade from 'Transition/Fade'
 
 
 export default class FirstScene extends Scene {
