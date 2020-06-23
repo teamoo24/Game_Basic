@@ -1,16 +1,16 @@
 import * as PIXI from 'pixi.js';
 import GameManager from 'Manager/GameManager'
-import FirstScene from 'Scene/FirstScene'
+import LogoScene from 'Scene/LogoScene'
 
 window.onload = () => {
 	GameManager.start({
-		glWidth:1136,
-		glHeight: 640,
+		glWidth:320,
+		glHeight: 320,
 		option: {
 			backgroundColor: 0x222222
 		},
 		view:<HTMLCanvasElement>document.getElementById("game")
 	})
 	// 最初のシーンの読み込み
-	GameManager.loadScene(new FirstScene());
+	GameManager.loadScene(new LogoScene());
 }
