@@ -35,6 +35,7 @@ export default class FirstScene extends Scene {
  	  	}
  	  	if(FirstScene.fade.isFadein) {
  	  		//fadein完了の時
+ 	  		//fadeout実行
  	  		FirstScene.fade.FadeOut()
  	  	}
  	  	if(FirstScene.fade.isFadeOut) {

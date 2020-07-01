@@ -2,7 +2,16 @@ import * as PIXI from 'pixi.js';
 import GameManager from 'Manager/GameManager'
 import LogoScene from 'Scene/LogoScene'
 
+
+let windowLoaded = false;
+
 window.onload = () => {
+	windowLoaded = true;
+	
+	initGame();
+}
+
+function initGame() {
 	GameManager.start({
 		glWidth:320,
 		glHeight: 320,

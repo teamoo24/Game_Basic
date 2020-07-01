@@ -29,6 +29,7 @@ module.exports = (env, argv) => {
 		},
 		devServer: {
 			contentBase: "www",
+			compress: true,
 			port: 8080
 		}
 	}

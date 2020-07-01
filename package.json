@@ -4,13 +4,10 @@
   "description": "daruma game",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc -p .",
-    "tslint": "tslint -p .",
-    "tslint:fix": "tslint -p . --fix",
-    "typedoc": "typedoc -p .",
     "webpack": "webpack",
     "server": "webpack-dev-server"
   },
+  "keywords": [],
   "author": "han",
   "license": "ISC",
   "devDependencies": {
