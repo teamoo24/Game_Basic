@@ -1,7 +1,7 @@
 {
-  "name": "daruma",
+  "name": "GameBasic",
   "version": "1.0.0",
-  "description": "daruma game",
+  "description": "Game Basic for all game",
   "main": "index.js",
   "scripts": {
     "webpack": "webpack",
