@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import GameManager from 'Manager/GameManager'
 import TextureManager from 'Manager/TextureManager'
+import SoundManager from 'Manager/SoundManager'
 
 import MainScene from 'Scene/MainScene'
 import Fade from 'Transition/Fade'
@@ -9,7 +10,7 @@ import Scene from 'Scene/Scene'
 import Resource from 'Resource'
 
 
-export default class FirstScene extends Scene {
+export default class LogoScene extends Scene {
 	// fadeを制御する変数
 	private static fade:Fade;
 	// logoのSprite
@@ -23,7 +24,7 @@ export default class FirstScene extends Scene {
 		this.logo = PIXI.Sprite.fromImage(Resource.Static.logo[0])
 		this.addChild(this.logo)
 
-		FirstScene.fade = new Fade(this,0.01);
+		LogoScene.fade = new Fade(this,0.01);
 
 	}
 
@@ -32,6 +33,7 @@ export default class FirstScene extends Scene {
 	*/
 	public initall():boolean {
 		TextureManager.initSheet();
+		SoundManager.init_sound();
 		return true;
 	}
 
@@ -40,16 +42,16 @@ export default class FirstScene extends Scene {
    	*/
    	public update(dt: number): void {
    		super.update(dt);
- 	  	if(!FirstScene.fade.isFadein) {
+ 	  	if(!LogoScene.fade.isFadein) {
  	  		//fadein実行
- 	  		FirstScene.fade.FadeIn()
+ 	  		LogoScene.fade.FadeIn()
  	  	}
- 	  	if(FirstScene.fade.isFadein && this.initall()) {
+ 	  	if(LogoScene.fade.isFadein && this.initall()) {
  	  		//fadein完了の時
  	  		//fadeout実行
- 	  		FirstScene.fade.FadeOut()
+ 	  		LogoScene.fade.FadeOut()
  	  	}
- 	  	if(FirstScene.fade.isFadeOut) {
+ 	  	if(LogoScene.fade.isFadeOut) {
  	  		//fadeout完了の時
    			GameManager.loadScene(new MainScene());
  	  	}

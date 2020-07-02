@@ -14,6 +14,11 @@ const Resource = Object.freeze({
 		Sprite: [
 			for_dripcoke+'assets/image/sprite/test_bg.png',
 		]
+	},
+	Sound: {
+		se: [
+			for_dripcoke+'assets/sound/se/se_ok.mp3',
+		]
 	}
 })
 

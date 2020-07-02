@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import GameManager from 'Manager/GameManager';
 import TextureManager from 'Manager/TextureManager';
+import SoundManager from 'Manager/SoundManager'
 
 import Scene from 'Scene/Scene';
 
@@ -44,7 +45,7 @@ export default class SecondScene extends Scene  {
     this.addChild(this.text);
 
     //textを押下したときシーン移動
-    //this.text.on('pointerdown', this.nextScene);
+    this.text.on('pointerdown', this.click_sound);
   }
 
   /**
@@ -61,5 +62,10 @@ export default class SecondScene extends Scene  {
    */
   public nextScene(): void {
     GameManager.loadScene(new LogoScene());
+  }
+
+  public click_sound(): void {
+    if(!SoundManager.se["ok"].isPlaying)
+          SoundManager.se["ok"].play()   
   }
 }
