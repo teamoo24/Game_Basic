@@ -10,6 +10,9 @@ const Resource = Object.freeze({
 	Static: {
 		logo: [
 			for_dripcoke+'assets/image/logo/logo.png',
+		],
+		Sprite: [
+			for_dripcoke+'assets/image/sprite/test_bg.png',
 		]
 	}
 })

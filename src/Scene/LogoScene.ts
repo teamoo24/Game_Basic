@@ -1,6 +1,9 @@
 import * as PIXI from 'pixi.js';
+
 import GameManager from 'Manager/GameManager'
-import SecondScene from 'Scene/MainScene'
+import TextureManager from 'Manager/TextureManager'
+
+import MainScene from 'Scene/MainScene'
 import Fade from 'Transition/Fade'
 import Scene from 'Scene/Scene'
 import Resource from 'Resource'
@@ -24,6 +27,14 @@ export default class FirstScene extends Scene {
 
 	}
 
+	/*
+	*	素材の初期化
+	*/
+	public initall():boolean {
+		TextureManager.initSheet();
+		return true;
+	}
+
   	/**
    	* 毎フレームの更新処理
    	*/
@@ -33,14 +44,14 @@ export default class FirstScene extends Scene {
  	  		//fadein実行
  	  		FirstScene.fade.FadeIn()
  	  	}
- 	  	if(FirstScene.fade.isFadein) {
+ 	  	if(FirstScene.fade.isFadein && this.initall()) {
  	  		//fadein完了の時
  	  		//fadeout実行
  	  		FirstScene.fade.FadeOut()
  	  	}
  	  	if(FirstScene.fade.isFadeOut) {
  	  		//fadeout完了の時
-   			GameManager.loadScene(new SecondScene());
+   			GameManager.loadScene(new MainScene());
  	  	}
    	}
 }

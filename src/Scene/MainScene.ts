@@ -1,6 +1,9 @@
 import * as PIXI from 'pixi.js';
 import GameManager from 'Manager/GameManager';
+import TextureManager from 'Manager/TextureManager';
+
 import Scene from 'Scene/Scene';
+
 import LogoScene from 'Scene/LogoScene';
 
 /**
@@ -8,13 +11,24 @@ import LogoScene from 'Scene/LogoScene';
  */
 export default class SecondScene extends Scene  {
   private text!: PIXI.Text;
+
+  private bg:PIXI.Sprite;
+
   private count: number = 0;
+  
 
   /**
    * コンストラクタ
    */
   constructor() {
     super();
+
+    this.bg = new PIXI.Sprite(new PIXI.Texture(TextureManager.Sheet["test_bg"],new PIXI.Rectangle(0,0,320,640)));
+
+    this.bg.anchor.set(0,0)
+    this.bg.position.set(0,-320);
+
+    this.addChild(this.bg)
 
     const textStyle = new PIXI.TextStyle({
       fontSize: 20,
@@ -29,7 +43,8 @@ export default class SecondScene extends Scene  {
     this.text.position.set(renderer.width * 0.5, renderer.height * 0.5);
     this.addChild(this.text);
 
-    this.text.on('pointerdown', this.nextScene);
+    //textを押下したときシーン移動
+    //this.text.on('pointerdown', this.nextScene);
   }
 
   /**
