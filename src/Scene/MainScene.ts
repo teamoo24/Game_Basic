@@ -45,7 +45,8 @@ export default class SecondScene extends Scene  {
     this.addChild(this.text);
 
     //textを押下したときシーン移動
-    this.text.on('pointerdown', this.click_sound);
+    this.text.on('pointerdown', this.click_sound)
+    .on('touchstart',this.click_sound);
   }
 
   /**
